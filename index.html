@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vilinda 💌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700;800&family=Sriracha&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: linear-gradient(180deg, #fff5fb, #fffefc);
+        --pink: #ff6fa3;
+        --soft: #ffeaf4;
+        --deep: #3b2b3a;
+        --accent: #b28cff;
+        --card: #ffffff;
+        --radius: 20px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Kanit, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        background: var(--bg);
+        color: var(--deep);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 880px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.6),
+          rgba(255, 255, 255, 1)
+        );
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(59, 43, 58, 0.12);
+        overflow: hidden;
+      }
+      header {
+        padding: 28px 28px 10px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .logo {
+        width: 72px;
+        height: 72px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--pink), var(--accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 26px;
+        box-shadow: 0 8px 16px rgba(178, 140, 255, 0.2);
+      }
+      .title {
+        flex: 1;
+      }
+      .title h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 0.3px;
+      }
+      .title p {
+        margin: 6px 0 0;
+        opacity: 0.8;
+        font-size: 14px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 22px;
+        padding: 18px;
+      }
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 6px 18px rgba(59, 43, 58, 0.06);
+      }
+
+      /* Question box */
+      .ask {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+        padding: 38px 18px;
+      }
+      .ask h2 {
+        font-size: clamp(28px, 5vw, 40px);
+        margin: 0;
+        font-weight: 800;
+      }
+      .ask p {
+        margin: 0;
+        opacity: 0.85;
+      }
+
+      .choices {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .btn {
+        padding: 12px 18px;
+        border-radius: 999px;
+        border: none;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+        transition: transform 0.18s ease;
+      }
+      .btn.yes {
+        background: linear-gradient(90deg, var(--pink), #ff9acc);
+        color: white;
+      }
+      .btn.no {
+        background: #fff;
+        border: 2px solid #ffe6f1;
+        color: var(--deep);
+      }
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+
+      /* Right column */
+      .right {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .profile {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #fff, #fff0f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: var(--pink);
+      }
+      .meta h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+      .meta p {
+        margin: 4px 0 0;
+        opacity: 0.75;
+        font-size: 13px;
+      }
+
+      .note {
+        font-size: 13px;
+        color: var(--deep);
+        opacity: 0.9;
+      }
+
+      /* Modal */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 60;
+      }
+      .overlay.show {
+        display: flex;
+      }
+      .modal {
+        width: min(640px, 92%);
+        background: linear-gradient(180deg, #fff, #fff8fb);
+        border-radius: 18px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 30px 60px rgba(59, 43, 58, 0.18);
+      }
+      .modal h3 {
+        font-size: 22px;
+        margin: 6px 0;
+      }
+      .modal p {
+        margin: 8px 0 18px;
+      }
+      .modal .actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+
+      /* Confetti */
+      .confetti {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 70;
+      }
+
+      /* Small playful */
+      .shake {
+        animation: shake 0.6s;
+      }
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-8px);
+        }
+        50% {
+          transform: translateX(8px);
+        }
+        75% {
+          transform: translateX(-6px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      footer {
+        padding: 18px;
+        text-align: center;
+        font-size: 13px;
+        opacity: 0.85;
+      }
+
+      /* tiny input styling */
+      input[type="text"] {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid #f1dce9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="logo">♡</div>
+        <div class="title">
+          <h1>ขอ Vilinda เป็นแฟน</h1>
+          <p>ทำให้หวาน ทำให้เขิน ทำให้ตอบว่า "ได้" 😊</p>
+        </div>
+      </header>
+
+      <div class="hero">
+        <main class="card ask">
+          <h2 id="mainQuestion">
+            [ชื่อของคุณ] เป็นแฟนกันไหม? [ชื่อคนที่ถูกขอ]  💌
+          </h2>
+          <p class="note">
+            ปรับชื่อได้โดยคลิกที่ชื่อในโค้ดหรือแก้ในช่องด้านขวา
+          </p>
+
+          <div class="choices">
+            <button class="btn yes" id="btnYes">ได้สิ! ❤️</button>
+            <button class="btn no" id="btnNo">เดี๋ยวก่อน... 😳</button>
+          </div>
+        </main>
+
+        <aside class="right">
+          <div class="card profile">
+            <div class="avatar" id="avatar">你</div>
+            <div class="meta">
+              <h3 contenteditable="true" id="fromName"></h3>
+              <p contenteditable="true" id="toName"></p>
+            </div>
+          </div>
+
+          <div class="card">
+            <label>ข้อความที่ต้องการให้ปรากฎเมื่อกด <b>ได้สิ</b>:</label>
+            <input
+              type="text"
+              id="loveMsg"
+              value="ยินดีด้วย เราจะดูแลเธอให้ดีที่สุด ♡"
+            />
+            <p class="note" style="margin-top: 10px">
+              ลิงก์ติดต่อ: ใส่ LINE/IG ในปุ่มหลังจากส่งคำตอบได้เลย
+            </p>
+          </div>
+
+          <div class="card">
+            <p class="note">ตั้งค่าเริ่มต้นติดต่อ (เปลี่ยน href ในโค้ด):</p>
+            <p style="margin: 6px 0">
+              <small
+                >LINE: <code>https://line.me/R/ti/p/@YOUR_LINE_ID</code></small
+              >
+            </p>
+            <p style="margin: 6px 0">
+              <small
+                >IG: <code>https://instagram.com/YOUR_INSTAGRAM</code></small
+              >
+            </p>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        ทำด้วยรักโดย <span contenteditable="true">ชื่อของคุณ</span> ·
+        <a href="#" id="copyLink">คัดลอกลิงก์เซอร์ไพรส์นี้</a>
+      </footer>
+    </div>
+
+    <!-- Modal + confetti -->
+    <div class="overlay" id="overlay" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true">
+        <h3 id="modalTitle">ขอบคุณนะ ♡</h3>
+        <p id="modalMsg">ข้อความ...</p>
+        <div class="actions">
+          <a class="btn yes" id="contactBtn" href="#" target="_blank"
+            >ทักไลน์เลย</a
+          >
+          <button class="btn no" id="closeModal">ปิด</button>
+        </div>
+      </div>
+    </div>
+    <canvas class="confetti" id="confetti"></canvas>
+
+    <script>
+      // Elements
+      const btnYes = document.getElementById("btnYes");
+      const btnNo = document.getElementById("btnNo");
+      const overlay = document.getElementById("overlay");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalMsg = document.getElementById("modalMsg");
+      const loveMsgInput = document.getElementById("loveMsg");
+      const contactBtn = document.getElementById("contactBtn");
+      const fromName = document.getElementById("fromName");
+      const toName = document.getElementById("toName");
+      const mainQuestion = document.getElementById("mainQuestion");
+      const copyLink = document.getElementById("copyLink");
+
+      // Default contact (แก้ href ในโค้ดได้)
+      const defaultLine = "https://line.me/R/ti/p/@YOUR_LINE_ID";
+      const defaultIG = "https://instagram.com/YOUR_INSTAGRAM";
+      contactBtn.href = defaultLine;
+
+      // Update question when names change
+      function refreshQuestion() {
+        const a = fromName.textContent.trim() ;
+        const b = toName.textContent.trim() ;
+        mainQuestion.textContent = `${a} Vilinda เป็นแฟนกันไหม? ${b}  💌`;
+      }
+      fromName.addEventListener("input", refreshQuestion);
+      toName.addEventListener("input", refreshQuestion);
+      refreshQuestion();
+
+      // Yes flow
+      btnYes.addEventListener("click", () => {
+        modalTitle.textContent = 'ตอบว่า "ได้" แล้วนะ! 🎉';
+        modalMsg.textContent =
+          loveMsgInput.value || "ยินดีด้วย! เราจะดูแลเธอให้ดีที่สุด ♡";
+        overlay.classList.add("show");
+        startConfetti();
+        // show contact button (user can change default href in code)
+        contactBtn.textContent = "ทักไลน์เลย";
+        contactBtn.href = defaultLine;
+      });
+
+      // No flow — playful
+      btnNo.addEventListener("click", () => {
+        btnNo.classList.add("shake");
+        setTimeout(() => btnNo.classList.remove("shake"), 700);
+        // after a few shakes, show softer alternative
+        setTimeout(() => {
+          modalTitle.textContent = "แค่แกล้งเล่นป่าวนะ 😅";
+          modalMsg.textContent =
+            "ไม่เป็นไรเลย ถ้าตอนนี้ยังไม่พร้อม เรารอได้เสมอ 💌";
+          overlay.classList.add("show");
+          contactBtn.textContent = "ส่งข้อความน่ารัก";
+          contactBtn.href = defaultIG;
+        }, 900);
+      });
+
+      // Close modal
+      document.getElementById("closeModal").addEventListener("click", () => {
+        overlay.classList.remove("show");
+        stopConfetti();
+      });
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove("show");
+          stopConfetti();
+        }
+      });
+
+      // Copy link
+      copyLink.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          await navigator.clipboard.writeText(location.href);
+          copyLink.textContent = "คัดลอกแล้ว!";
+          setTimeout(
+            () => (copyLink.textContent = "คัดลอกลิงก์เซอร์ไพรส์นี้"),
+            1400
+          );
+        } catch {}
+      });
+
+      // ===== Simple confetti (canvas) =====
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+      let confettiActive = false;
+      let confettiParticles = [];
+
+      function resizeCanvas() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+      }
+      addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+      function createParticle() {
+        return {
+          x: rand(0, canvas.width),
+          y: rand(-20, -100),
+          w: rand(6, 12),
+          h: rand(8, 16),
+          rot: rand(0, 360),
+          speed: rand(1.5, 4),
+          gravity: rand(0.03, 0.08),
+          color: ["#ff6fa3", "#ffd6e9", "#b28cff", "#fff38a", "#9be7d3"][
+            Math.floor(rand(0, 5))
+          ],
+        };
+      }
+      function startConfetti() {
+        confettiActive = true;
+        confettiParticles = Array.from({ length: 80 }, createParticle);
+        runConfetti();
+      }
+      function stopConfetti() {
+        confettiActive = false;
+        confettiParticles = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function runConfetti() {
+        if (!confettiActive) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let p of confettiParticles) {
+          p.y += p.speed;
+          p.speed += p.gravity;
+          p.rot += p.speed * 2;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+          if (p.y > canvas.height + 20) {
+            Object.assign(p, createParticle());
+            p.y = rand(-100, -20);
+          }
+        }
+        requestAnimationFrame(runConfetti);
+      }
+
+      // Friendly hint: editable texts
+      // (ผู้ใช้สามารถแก้ชื่อ ข้อความ และลิงก์ได้ในหน้า HTML / ตรง input)
+    </script>
+  </body>
+</html>
