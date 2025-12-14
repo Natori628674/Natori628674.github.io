@@ -1,253 +1,332 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sou | Portfolio</title>
+    <title>ຮູບລຸດສະໄຫມມະຫາໄລ</title>
     <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
-      * {
+      body {
+        font-family: "Roboto", sans-serif;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Poppins", sans-serif;
-        background: #0b0b14;
+        background: linear-gradient(135deg, #121212, #1a1a1a);
         color: #fff;
-        overflow-x: hidden;
       }
 
-      /* 🔵 พื้นหลังนีออน */
-      .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at 20% 20%, #00bfff33, transparent),
-          radial-gradient(circle at 80% 80%, #ff00ff33, transparent);
-        animation: moveBg 10s ease-in-out infinite alternate;
-        z-index: -1;
-      }
-      @keyframes moveBg {
-        0% {
-          background-position: 0 0;
-        }
-        100% {
-          background-position: 100% 100%;
-        }
-      }
-
-      /* 🔹 Header */
       header {
         position: fixed;
         top: 0;
         width: 100%;
-        padding: 20px 60px;
+        height: 60px;
+        background: #1f1f1f;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
-        z-index: 10;
-      }
-      .logo {
-        font-size: 1.8rem;
-        color: #00bfff;
-      }
-      .logo span {
-        color: #fff;
-      }
-      .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 25px;
-      }
-      .nav-links a {
-        text-decoration: none;
-        color: #fff;
-        transition: color 0.3s;
-      }
-      .nav-links a:hover {
-        color: #00bfff;
+        justify-content: space-between;
+        padding: 0 15px;
+        font-size: 20px;
+        font-weight: 500;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        z-index: 100;
       }
 
-      /* 🌟 Hero Section */
-      .hero {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 0 20px;
-      }
-      .avatar {
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-        border: 3px solid #00bfff;
-        margin-bottom: 20px;
-        box-shadow: 0 0 20px #00bfff88;
-      }
-      .hero h2 {
-        font-size: 2.3rem;
-      }
-      .hero span {
-        color: #00bfff;
-      }
-      .typing {
-        font-size: 1.2rem;
-        margin-top: 10px;
+      header #total {
+        font-size: 14px;
         color: #aaa;
       }
 
-      /* 🔗 Social */
-      .social-links {
-        margin-top: 25px;
-      }
-      .social-links a {
-        color: #00bfff;
-        font-size: 1.6rem;
-        margin: 0 10px;
-        transition: transform 0.3s, color 0.3s;
-      }
-      .social-links a:hover {
-        color: #fff;
-        transform: scale(1.2);
+      main {
+        margin-top: 70px;
+        padding: 10px;
       }
 
-      /* 🧩 Sections */
-      .about,
-      .contact {
-        padding: 100px 20px;
-        max-width: 800px;
-        margin: auto;
-        text-align: center;
+      #gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
       }
-      .fade-in {
+
+      /* ก้อนรูปสวย */
+      .image-container {
+        position: relative;
+        background: #1e1e1e;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
         opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-      }
-      .fade-in.show {
-        opacity: 1;
-        transform: translateY(0);
+        animation: fadeIn 0.5s forwards;
       }
 
-      /* ⚙️ Footer */
+      .image-container:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s;
+      }
+
+      /* ปุ่มลบ */
+      .delete-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(255, 0, 0, 0.8);
+        border: none;
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.3s;
+      }
+
+      .delete-btn:hover {
+        background: rgba(255, 0, 0, 1);
+      }
+
+      /* ปุ่มลอยอัปโหลด + ล้าง gallery */
+      .button-float {
+        position: fixed;
+        bottom: 20px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        border: none;
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      #uploadBtn {
+        background: #00bfa5;
+        right: 20px;
+      }
+      #uploadBtn:hover {
+        background: #00e5ff;
+        transform: scale(1.1);
+      }
+
+      #clearBtn {
+        background: #ff5722;
+        right: 90px;
+      }
+      #clearBtn:hover {
+        background: #ff784e;
+        transform: scale(1.1);
+      }
+
+      #upload {
+        display: none;
+      }
+
+      /* Lightbox */
+      #lightbox {
+        position: fixed;
+        display: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        justify-content: center;
+        align-items: center;
+        z-index: 200;
+      }
+
+      #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 15px;
+        animation: fadeIn 0.4s ease;
+      }
+
+      #closeLightbox {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        #gallery {
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          gap: 8px;
+        }
+        .image-container img {
+          height: 120px;
+        }
+        .button-float {
+          width: 50px;
+          height: 50px;
+          font-size: 26px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        #gallery {
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+          gap: 12px;
+        }
+        .image-container img {
+          height: 140px;
+        }
+        .button-float {
+          width: 55px;
+          height: 55px;
+          font-size: 28px;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
       footer {
         text-align: center;
-        padding: 20px;
-        background: rgba(0, 0, 0, 0.8);
+        padding: 10px 0;
         color: #aaa;
-      }
-
-      /* 📱 Responsive */
-      @media (max-width: 768px) {
-        header {
-          flex-direction: column;
-          gap: 10px;
-        }
-        .nav-links {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        .hero h2 {
-          font-size: 1.8rem;
-        }
+        font-size: 12px;
+        background: #1f1f1f;
       }
     </style>
   </head>
   <body>
-    <div class="background"></div>
+    <header>ຮູບລຸດສະໄຫມມະຫາໄລສຸພານຸວົງ<span id="total"></span></header>
 
-    <header>
-      <h1 class="logo">Anoulurk<span>.</span></h1>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </header>
+    <main>
+      <div id="gallery"></div>
+    </main>
 
-    <section id="home" class="hero">
-      <img
-        src="https://i.ibb.co/S6rvxH8/avatar.png"
-        alt="Sou Avatar"
-        class="avatar"
-      />
-      <h2>Hi, I'm <span>Anoulurk</span></h2>
-      <p class="typing"></p>
-      <div class="social-links">
-        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-      </div>
-    </section>
+    <input type="file" id="upload" multiple accept="image/*" />
+    <button id="uploadBtn" class="button-float">+</button>
+    <button id="clearBtn" class="button-float">🗑</button>
 
-    <section id="about" class="about fade-in">
-      <h2>About Me</h2>
-      <p>
-        I’m <strong>Sou</strong> — a passionate IT student who loves building
-        things with code.<br />
-        My dream is to create technology that connects people,
-      </p>
-    </section>
+    <div id="lightbox">
+      <img src="" alt="Full View" />
+      <div id="closeLightbox">&times;</div>
+    </div>
 
-    <section id="contact" class="contact fade-in">
-      <h2>Contact</h2>
-      <p>📧 <a href="mailto:sou@example.com">anoulurkhansamak@gmail.com</a></p>
-    </section>
-
-    <footer>
-      <p>© 2025 Sou. Made with 💙 by Anoulurk</p>
-    </footer>
+    <footer>© 2025 Sou Gallery</footer>
 
     <script>
-      const texts = ["a Developer.", "a Dreamer.", "a Creator."];
-      let index = 0,
-        charIndex = 0,
-        deleting = false;
+      const uploadInput = document.getElementById("upload");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const gallery = document.getElementById("gallery");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = lightbox.querySelector("img");
+      const closeLightbox = document.getElementById("closeLightbox");
+      const totalSpan = document.getElementById("total");
 
-      function type() {
-        const typing = document.querySelector(".typing");
-        if (!typing) return;
+      let images = JSON.parse(localStorage.getItem("images") || "[]");
 
-        const word = texts[index];
-        typing.textContent = "I'm " + word.substring(0, charIndex);
-
-        if (!deleting && charIndex < word.length) {
-          charIndex++;
-          setTimeout(type, 100);
-        } else if (deleting && charIndex > 0) {
-          charIndex--;
-          setTimeout(type, 50);
-        } else {
-          deleting = !deleting;
-          if (!deleting) index = (index + 1) % texts.length;
-          setTimeout(type, 1200);
-        }
+      function saveImages() {
+        localStorage.setItem("images", JSON.stringify(images));
+      }
+      function updateTotal() {
+        totalSpan.textContent = `(${images.length} รูป)`;
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
-        type();
-        const fadeEls = document.querySelectorAll(".fade-in");
-        window.addEventListener("scroll", () => {
-          fadeEls.forEach((el) => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight - 100) {
-              el.classList.add("show");
-            }
+      function renderGallery() {
+        gallery.innerHTML = "";
+        images.forEach((src, index) => {
+          const container = document.createElement("div");
+          container.className = "image-container";
+
+          const img = document.createElement("img");
+          img.src = src;
+          img.addEventListener("click", () => {
+            lightbox.style.display = "flex";
+            lightboxImg.src = src;
           });
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "delete-btn";
+          delBtn.textContent = "×";
+          delBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            images.splice(index, 1);
+            saveImages();
+            renderGallery();
+          });
+
+          container.appendChild(img);
+          container.appendChild(delBtn);
+          gallery.appendChild(container);
         });
+        updateTotal();
+      }
+
+      // ปุ่มอัปโหลด
+      uploadBtn.addEventListener("click", () => uploadInput.click());
+
+      uploadInput.addEventListener("change", () => {
+        const files = Array.from(uploadInput.files);
+        files.forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            images.push(e.target.result);
+            saveImages();
+            renderGallery();
+          };
+          reader.readAsDataURL(file);
+        });
+        uploadInput.value = "";
       });
+
+      // ปุ่มล้าง gallery
+      clearBtn.addEventListener("click", () => {
+        images = [];
+        saveImages();
+        renderGallery();
+      });
+
+      // ปิด Lightbox
+      closeLightbox.addEventListener(
+        "click",
+        () => (lightbox.style.display = "none")
+      );
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.style.display = "none";
+      });
+
+      renderGallery();
     </script>
   </body>
 </html>
