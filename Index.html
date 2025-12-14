@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ຮູບລຸດສະໄຫມມະຫາໄລ</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #121212, #1a1a1a);
+        color: #fff;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 60px;
+        background: #1f1f1f;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        font-size: 20px;
+        font-weight: 500;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+      }
+
+      header #total {
+        font-size: 14px;
+        color: #aaa;
+      }
+
+      main {
+        margin-top: 70px;
+        padding: 10px;
+      }
+
+      #gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+      }
+
+      /* ก้อนรูปสวย */
+      .image-container {
+        position: relative;
+        background: #1e1e1e;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+        opacity: 0;
+        animation: fadeIn 0.5s forwards;
+      }
+
+      .image-container:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s;
+      }
+
+      /* ปุ่มลบ */
+      .delete-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(255, 0, 0, 0.8);
+        border: none;
+        color: #fff;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background 0.3s;
+      }
+
+      .delete-btn:hover {
+        background: rgba(255, 0, 0, 1);
+      }
+
+      /* ปุ่มลอยอัปโหลด + ล้าง gallery */
+      .button-float {
+        position: fixed;
+        bottom: 20px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        border: none;
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      #uploadBtn {
+        background: #00bfa5;
+        right: 20px;
+      }
+      #uploadBtn:hover {
+        background: #00e5ff;
+        transform: scale(1.1);
+      }
+
+      #clearBtn {
+        background: #ff5722;
+        right: 90px;
+      }
+      #clearBtn:hover {
+        background: #ff784e;
+        transform: scale(1.1);
+      }
+
+      #upload {
+        display: none;
+      }
+
+      /* Lightbox */
+      #lightbox {
+        position: fixed;
+        display: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        justify-content: center;
+        align-items: center;
+        z-index: 200;
+      }
+
+      #lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 15px;
+        animation: fadeIn 0.4s ease;
+      }
+
+      #closeLightbox {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        #gallery {
+          grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+          gap: 8px;
+        }
+        .image-container img {
+          height: 120px;
+        }
+        .button-float {
+          width: 50px;
+          height: 50px;
+          font-size: 26px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        #gallery {
+          grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+          gap: 12px;
+        }
+        .image-container img {
+          height: 140px;
+        }
+        .button-float {
+          width: 55px;
+          height: 55px;
+          font-size: 28px;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 10px 0;
+        color: #aaa;
+        font-size: 12px;
+        background: #1f1f1f;
+      }
+    </style>
+  </head>
+  <body>
+    <header>ຮູບລຸດສະໄຫມມະຫາໄລສຸພານຸວົງ<span id="total"></span></header>
+
+    <main>
+      <div id="gallery"></div>
+    </main>
+
+    <input type="file" id="upload" multiple accept="image/*" />
+    <button id="uploadBtn" class="button-float">+</button>
+    <button id="clearBtn" class="button-float">🗑</button>
+
+    <div id="lightbox">
+      <img src="" alt="Full View" />
+      <div id="closeLightbox">&times;</div>
+    </div>
+
+    <footer>© 2025 Sou Gallery</footer>
+
+    <script>
+      const uploadInput = document.getElementById("upload");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const gallery = document.getElementById("gallery");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = lightbox.querySelector("img");
+      const closeLightbox = document.getElementById("closeLightbox");
+      const totalSpan = document.getElementById("total");
+
+      let images = JSON.parse(localStorage.getItem("images") || "[]");
+
+      function saveImages() {
+        localStorage.setItem("images", JSON.stringify(images));
+      }
+      function updateTotal() {
+        totalSpan.textContent = `(${images.length} รูป)`;
+      }
+
+      function renderGallery() {
+        gallery.innerHTML = "";
+        images.forEach((src, index) => {
+          const container = document.createElement("div");
+          container.className = "image-container";
+
+          const img = document.createElement("img");
+          img.src = src;
+          img.addEventListener("click", () => {
+            lightbox.style.display = "flex";
+            lightboxImg.src = src;
+          });
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "delete-btn";
+          delBtn.textContent = "×";
+          delBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            images.splice(index, 1);
+            saveImages();
+            renderGallery();
+          });
+
+          container.appendChild(img);
+          container.appendChild(delBtn);
+          gallery.appendChild(container);
+        });
+        updateTotal();
+      }
+
+      // ปุ่มอัปโหลด
+      uploadBtn.addEventListener("click", () => uploadInput.click());
+
+      uploadInput.addEventListener("change", () => {
+        const files = Array.from(uploadInput.files);
+        files.forEach((file) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            images.push(e.target.result);
+            saveImages();
+            renderGallery();
+          };
+          reader.readAsDataURL(file);
+        });
+        uploadInput.value = "";
+      });
+
+      // ปุ่มล้าง gallery
+      clearBtn.addEventListener("click", () => {
+        images = [];
+        saveImages();
+        renderGallery();
+      });
+
+      // ปิด Lightbox
+      closeLightbox.addEventListener(
+        "click",
+        () => (lightbox.style.display = "none")
+      );
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) lightbox.style.display = "none";
+      });
+
+      renderGallery();
+    </script>
+  </body>
+</html>
